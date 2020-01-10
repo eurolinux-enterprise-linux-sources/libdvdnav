@@ -1,3 +1,34 @@
+libdvdnav (5.0.3)
+ * added dvdnav_open_stream to read from external read/seek callbacks
+ * fixed reading DVD label regression
+
+libdvdnav (5.0.2)
+ * fixed 2 wrong asserts (LP #1236939, #570790)
+ * fixed 2 crashes (in dvdnav_get_position and dvdnav_get_position_in_title)
+
+libdvdnav (5.0.1)
+ * removed assert on unknown VM commands, fixing playback of some DVDs
+ * fixed a double free in dvdnav_free_dup
+ * fixed an integer overflow, a data race condition and return inconsistency
+
+libdvdnav (5.0.0)
+ * Android support
+ * fixed numerous crashes, assertions and corruptions
+ * rewrite of the build-system, including silent rules
+ * clean code, simplify and remove warnings
+ * fix compilation in C++ applications
+ * removal of remap .MAP files unused feature
+ * remove the dvdnavmini library
+ * fix compilation on OS/2 and Hurd
+
+libdvdnav (4.2.1)
+ * fixed failed assertion on menu-less DVDs
+ * fixed playback issues on multi-angle DVDs
+ * fixed crash when playing a DVD from different region than currently set
+   in the DVD drive
+ * fixed segfaults when reading certain DVDs (including "Jack Reacher",
+   "Ghost Protocol", "Inside Man", "The Dictator" and "Tangled")
+
 libdvdnav (4.2.0)
   * OS/2 support
   * added dvdnav_get_serial_string() function

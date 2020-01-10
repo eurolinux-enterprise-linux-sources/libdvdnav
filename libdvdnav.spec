@@ -1,16 +1,15 @@
 Name:           libdvdnav
-Version:        4.2.0
-Release:        8%{?dist}
+Version:        5.0.3
+Release:        1%{?dist}
 Summary:        A library for reading DVD video discs based on Ogle code
 
 Group:          System Environment/Libraries
 License:        GPLv2+
-Source0:        http://dvdnav.mplayerhq.hu/releases/libdvdnav-%{version}.tar.bz2
-Patch0:         %{name}-multilib.patch
+Source0:        https://download.videolan.org/pub/videolan/libdvdnav/%{version}/libdvdnav-%{version}.tar.bz2
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  doxygen
-BuildRequires:  libdvdread-devel >= 4.1.3-0.3
+BuildRequires:  libdvdread-devel >= 5.0.2
 
 %description
 libdvdnav provides a simple library for reading DVD video discs.
@@ -20,7 +19,7 @@ The code is based on Ogle and used in, among others, the Xine dvdnav plug-in.
 Summary:        Development files for libdvdnav
 Group:          Development/Libraries
 Requires:       %{name} = %{version}-%{release}
-Requires:       libdvdread-devel >= 4.1.3-0.3
+Requires:       libdvdread-devel >= 5.0.2
 Requires:       pkgconfig
 
 %description    devel
@@ -29,18 +28,12 @@ libdvdnav library.
 
 %prep
 %setup -q
-%patch0 -p1 -b .multilib
 
 %build
-./configure2 \
- --disable-opts \
+CFLAGS="%{optflags} -fno-strict-aliasing" ./configure \
  --disable-static \
- --disable-strip \
- --extra-cflags="%{optflags} -fno-strict-aliasing" \
  --libdir=%{_libdir} \
- --prefix=%{_prefix} \
- --shlibdir=%{_libdir} \
- --with-dvdread-config="pkg-config dvdread" \
+ --prefix=%{_prefix}
 
 %{__make} %{?_smp_mflags}
 pushd doc
@@ -50,8 +43,8 @@ popd
 %install
 %{__rm} -rf %{buildroot}
 %{__make} install DESTDIR=%{buildroot}
-%{__install} -d -m 755 %{buildroot}/%{_datadir}/aclocal
-%{__install} -p -m 644 m4/dvdnav.m4 %{buildroot}/%{_datadir}/aclocal
+rm %{buildroot}%{_libdir}/libdvdnav.la
+rm -rf %{buildroot}%{_datadir}/doc/
 
 %clean
 %{__rm} -rf %{buildroot}
@@ -62,22 +55,22 @@ popd
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS ChangeLog COPYING NEWS README
+%doc AUTHORS ChangeLog README
 %{_libdir}/libdvdnav.so.*
-%{_libdir}/libdvdnavmini.so.*
 
 %files devel
 %defattr(-,root,root,-)
 %doc TODO doc/html/*
-%{_bindir}/dvdnav-config
 %{_libdir}/libdvdnav.so
-%{_libdir}/libdvdnavmini.so
 %{_includedir}/dvdnav
-%{_datadir}/aclocal/dvdnav.m4
 %{_libdir}/pkgconfig/dvdnav.pc
-%{_libdir}/pkgconfig/dvdnavmini.pc
 
 %changelog
+* Wed May 18 2016 Bastien Nocera <bnocera@redhat.com> - 5.0.3-1
+- Upgrade to 5.0.3
+- Fixes a number of playback bugs
+Resolves: #1068814
+
 * Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 4.2.0-8
 - Mass rebuild 2014-01-24
 
