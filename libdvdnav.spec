@@ -1,6 +1,6 @@
 Name:           libdvdnav
 Version:        4.2.0
-Release:        6%{?dist}
+Release:        8%{?dist}
 Summary:        A library for reading DVD video discs based on Ogle code
 
 Group:          System Environment/Libraries
@@ -78,6 +78,12 @@ popd
 %{_libdir}/pkgconfig/dvdnavmini.pc
 
 %changelog
+* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 4.2.0-8
+- Mass rebuild 2014-01-24
+
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 4.2.0-7
+- Mass rebuild 2013-12-27
+
 * Thu Jul 18 2013 Matthias Clasen <mclasen@redhat.com> - 4.2.0-5
 - Disable strict aliasing
 
